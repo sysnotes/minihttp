@@ -21,17 +21,21 @@ int main(void)
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(8080);
 
-    
     if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) == -1) {
-    perror("bind");
-    close(server_fd);
-    return 1;
-}
+        perror("bind");
+        close(server_fd);
+        return 1;
+    }
 
-
-
+    if (listen(server_fd, 10) == -1) {
+        perror("listen");
+        close(server_fd);
+        return 1;
+    }
 
     printf("Socket created: %d\n", server_fd);
+
+    getchar();
 
     close(server_fd);
 
